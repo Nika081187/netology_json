@@ -14,6 +14,8 @@ struct NetworkService {
         case people = "https://swapi.dev/api/people/8"
         case starships = "https://swapi.dev/api/starships/3"
         case planets = "https://swapi.dev/api/planets/5"
+        case todo = "https://jsonplaceholder.typicode.com/todos/7"
+        case planet = "https://swapi.dev/api/planets/1/"
     }
     
     static let session = URLSession.shared
@@ -34,6 +36,14 @@ struct NetworkService {
                 }
             }.resume()
         }
+    }
+    
+    static func toObject(jsonData: Data) throws -> Dictionary<String, Any>? {
+        return try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers) as? [String: Any]
+    }
+    
+    static func todata(dictionary: Dictionary<String, Any>) throws  -> Data {
+        return try JSONSerialization.data(withJSONObject: dictionary, options: .fragmentsAllowed)
     }
     
     public enum HTTPMethod: String {
